@@ -1,0 +1,4 @@
+.data
+nums: .word 10,9,8,7,6,5,4,3,2,1
+sorted: .word 0:10
+length: .word 10
