@@ -13,7 +13,7 @@ la $t3, sizeB
 lw $s2, 4($t3)
 
 li $v0, 1
-
+li $t5, 0
 
 
 #s3 = A Rows
@@ -68,8 +68,12 @@ loop1:
 			j loop3
 			endLoop3:
 			li $s5, 0
-			move $a0, $s7
-			syscall
+			
+			la $t6, result
+			sll $t0, $t5, 2
+			add $t6, $t6, $t0
+			addi $t5, $t5, 1
+			sw $s7, ($t6)
 			li $s7, 0
 	
 	addi $s4, $s4, 1

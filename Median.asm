@@ -1,8 +1,13 @@
 .data
-nums: .word 10,9,8,7,6,5,4,3,2,1
+nums: .word 92, 31, 92, 6, 54, 54, 62, 33, 8, 52
 sorted: .word 0:10
 temp: .word 0:10
+
+
 length: .word 10
+min: .word 0
+max: .word 0
+median: .word 0
 
 
 .text
@@ -34,11 +39,77 @@ length: .word 10
 		
 		
 		
-		li $v0, 1
-		addi $a0, $v1, 0
-		syscall
-		
+	lw $t2, length
+	li $t4, 2
+	div $t2, $t4
+	mfhi $t3
+	mflo $t2
+	beq $t3, 0, even	
+	
 
+	la $t0, sorted
+	lw $t1, ($t0)
+	sw $t1, min
+	
+	lw $t2, length
+	srl $t2, $t2, 1
+	sll $t2, $t2, 2
+	
+	add $t0, $t0, $t2
+	lw $t1, ($t0)
+	sw $t1, median
+	
+	lw $t2, length
+	subi $t2, $t2, 1
+	sll $t2, $t2, 2
+	la $t0, sorted
+	add $t0, $t0, $t2
+	lw $t1, ($t0)
+	sw $t1, max 
+	
+	j endProgram
+	
+	even:
+	la $t0, sorted
+	lw $t1, ($t0)
+	sw $t1, min
+	
+	
+	
+	lw $t2, length
+	srl $t2, $t2, 1
+	sll $t2, $t2, 2
+	
+	add $t0, $t0, $t2
+	lw $t4, ($t0)
+	
+	la $t0, sorted
+	lw $t2, length
+	srl $t2, $t2, 1
+	subi $t2, $t2, 1
+	sll $t2, $t2, 2
+	
+	add $t0, $t0, $t2
+	lw $t5, ($t0)
+	add $t5, $t5, $t4
+	srl $t5, $t5, 1
+	
+	sw $t5, median
+	
+	
+	
+	
+	lw $t2, length
+	subi $t2, $t2, 1
+	sll $t2, $t2, 2
+	la $t0, sorted
+	add $t0, $t0, $t2
+	lw $t1, ($t0)
+	sw $t1, max 
+
+
+
+	endProgram:
 	li $v0, 10  #terminates the program
 	syscall
 	
